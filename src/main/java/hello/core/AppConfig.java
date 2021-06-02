@@ -1,6 +1,8 @@
 package hello.core;
 
+import hello.core.discount.DiscountPolicy;
 import hello.core.discount.FixDiscountPolicy;
+import hello.core.member.MemberRepository;
 import hello.core.member.MemberService;
 import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
@@ -12,11 +14,19 @@ public class AppConfig {
     //어딘가에서 memberService를 가져다가 쓸때 appconfig에서 설정한 메모리멤버 리포지토리를 가져다가 쓰게된다.
     //**생성자 주입!!
     public MemberService memberService() {
-        return  new MemberServiceImpl(new MemoryMemberRepository());
+        return  new MemberServiceImpl(memberRepository());
+    }
+
+    private MemberRepository memberRepository() {
+        return new MemoryMemberRepository();
     }
 
     public OrderService orderService() {
-        return new OrderServiceImpl(new MemoryMemberRepository(), new FixDiscountPolicy());
+        return new OrderServiceImpl(memberRepository(), discountPolicy());
+    }
+
+    public DiscountPolicy discountPolicy() {
+        return new FixDiscountPolicy();
     }
 
 /*
@@ -34,4 +44,9 @@ public class AppConfig {
 *   appConfig 객체는 memoryMemberRepository 객체를 생성하고 그 참조값을 memberServiceImpl을 생성하면서 생성자로 전달한다.
 *   클라이언트인 memberServiceImpl 입장에서보면 의존관계를 마치 외부에서 주입해주는 것 같다고 해서 DI 우리말로 의존관계 주입 또는 의존성 주입이라고 한다.
 * */
+
+    /*
+     * new MemoryRepository() 부분의 중복이 제거되었다. 이제 MemoryMemberRopository를 다른 구현체로 변경할 때 한 부분만 변경하면 된다
+     * AppConfig 를 보면 역활과 구현 클래스가 한눈에 들어온다. 애플리케이션 전체 구성이 어떻게 되어있는지 빠르게 파악할 수 있다.
+     * */
 }
