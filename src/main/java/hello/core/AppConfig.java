@@ -19,11 +19,13 @@ public class AppConfig {
     //**생성자 주입!!
     @Bean
     public MemberService memberService() {
+
         return  new MemberServiceImpl(memberRepository());
     }
 
     @Bean
     public MemberRepository memberRepository() {
+
         return new MemoryMemberRepository();
     }
 
