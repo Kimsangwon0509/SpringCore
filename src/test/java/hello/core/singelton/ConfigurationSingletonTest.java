@@ -52,4 +52,5 @@ public class ConfigurationSingletonTest {
     * @Bean 만 사용해도 스프링 빈으로 등록되지만, 싱글톤을 보장하지 않는다.
     * 크게 고민할것 없이 , 스프링 설정 정보는 항상 @Configuration을 사용하자
     * */
+
 }

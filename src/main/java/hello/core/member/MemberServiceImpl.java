@@ -1,5 +1,9 @@
 package hello.core.member;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class MemberServiceImpl implements MemberService{
 
     //현재의 코드가 MemberRepository라는 추상화에도 의존하고 emoryMemberRepository라는 구체화에도 의존하므로 안좋은 코드가 된다.
@@ -8,6 +12,7 @@ public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
 
+    @Autowired // ac.getBean(MemberRepository.class)와 같음
     public MemberServiceImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     } // 생성자를 통해서 memberRepsitory에 무엇이 들어갈지를 정한다.
